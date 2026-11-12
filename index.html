@@ -3,50 +3,54 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Generator seed phrase BIP39</title>
+<title>Seed – generator frazy BIP39</title>
 <style>
-:root{--bg:#f5f6f8;--surf:#ffffff;--surf2:#eef0f4;--ink:#161b26;--mute:#667085;--line:#dde1e9;--acc:#2F5BEA;--ent:#2F5BEA;--entoff:#d6dbe6;--chk:#161b26;--chkoff:#9aa3b5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1016;--surf:#161a22;--surf2:#1d222c;--ink:#eef1f6;--mute:#8d96a8;--line:#272d39;--acc:#2F5BEA;--ent:#2F5BEA;--entoff:#303747;--chk:#eef1f6;--chkoff:#6b7487;color-scheme:dark;}}
-:root[data-theme="dark"]{--bg:#0d1016;--surf:#161a22;--surf2:#1d222c;--ink:#eef1f6;--mute:#8d96a8;--line:#272d39;--acc:#2F5BEA;--ent:#2F5BEA;--entoff:#303747;--chk:#eef1f6;--chkoff:#6b7487;color-scheme:dark;}
+:root{--bg:#f6f7f9;--surf:#ffffff;--surf2:#eef0f4;--ink:#121722;--mute:#667085;--line:#dfe3ea;--off:#d3d8e1;--acc:#2F5BEA;--accsoft:rgba(47,91,234,.12);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0f14;--surf:#151a21;--surf2:#1c222b;--ink:#eef1f6;--mute:#8b94a6;--line:#262d38;--off:#2e3643;--acc:#2F5BEA;--accsoft:rgba(47,91,234,.22);color-scheme:dark;}}
+:root[data-theme="dark"]{--bg:#0c0f14;--surf:#151a21;--surf2:#1c222b;--ink:#eef1f6;--mute:#8b94a6;--line:#262d38;--off:#2e3643;--acc:#2F5BEA;--accsoft:rgba(47,91,234,.22);color-scheme:dark;}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:22px 16px 48px;min-height:100vh}
-main{max-width:860px;margin:0 auto}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;background:var(--surf);border:1px solid var(--line);color:var(--mute);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-.eyebrow span{width:8px;height:8px;border-radius:50%;background:var(--acc)}
-h1{font-size:2rem;line-height:1.15;margin:14px 0 8px;letter-spacing:-.02em}
-.sub{color:var(--mute);margin:0 0 16px;max-width:58ch}
-.warn{display:block;margin:0 0 20px;padding:12px 14px;border-radius:14px;background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--acc);color:var(--mute);font-size:.9rem}
-.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
-button{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--surf);color:var(--ink);padding:11px 18px;border-radius:14px;cursor:pointer;transition:transform .1s,border-color .2s}
-button:hover{border-color:var(--mute)}
-button.primary{background:var(--acc);color:#fff;border-color:var(--acc)}
-button.primary:hover{filter:brightness(1.08)}
-button:active{transform:translateY(1px)}
-button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--surf);border:1px solid var(--line)}
-.seg button{border:0;background:transparent;color:var(--mute);border-radius:999px;padding:8px 16px}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:16px 14px 48px;min-height:100vh}
+main{max-width:520px;margin:0 auto;display:grid;gap:14px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 2px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
+.logo i{width:28px;height:28px;border-radius:9px;background:var(--acc);display:grid;place-items:center}
+.logo i:after{content:"";width:10px;height:10px;border:2.5px solid #fff;border-radius:50%}
+.seg{display:inline-flex;padding:3px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}
+.seg button{font:inherit;font-size:.85rem;font-weight:600;border:0;background:transparent;color:var(--mute);border-radius:9px;padding:6px 12px;cursor:pointer}
 .seg button.on{background:var(--acc);color:#fff}
-.panel{background:var(--surf);border:1px solid var(--line);border-radius:24px;padding:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-.card{background:var(--surf2);border:1px solid var(--line);border-radius:16px;padding:12px;transition:border-color .2s}
-.card:hover{border-color:var(--acc)}
-.top{display:flex;align-items:center;gap:8px}
-.n{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:999px;background:var(--acc);color:#fff;font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums}
-.word{font-size:1.1rem;font-weight:700;letter-spacing:.01em}
-.bits{display:flex;gap:2px;margin:10px 0 6px}
-.bits i{flex:1;height:10px;border-radius:3px;background:var(--entoff)}
-.bits i.on{background:var(--ent)}
-.bits i.c{background:var(--chkoff)}
-.bits i.c.on{background:var(--chk)}
-.idx{color:var(--mute);font:.7rem ui-monospace,Menlo,Consolas,monospace}
-.grid.blur .word,.grid.blur .bits,.grid.blur .idx{filter:blur(10px);user-select:none}
-.word,.bits,.idx{transition:filter .25s}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:14px 4px 2px;color:var(--mute);font-size:.82rem}
-.legend b{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:6px}
-.steps{margin-top:18px;background:var(--surf);border:1px solid var(--line);border-radius:20px;padding:14px 18px;color:var(--mute);font-size:.9rem}
-.steps b{color:var(--ink)}
-.steps ol{margin:6px 0 0;padding-left:20px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:22px;padding:18px}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1,h2{margin:0;font-size:1.2rem;letter-spacing:-.01em}
+.tag{font:600 .7rem ui-monospace,Menlo,monospace;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.mut{color:var(--mute);font-size:.9rem;margin:6px 0 0}
+#list{display:grid;grid-auto-flow:column;grid-template-columns:1fr 1fr;gap:8px 10px;margin:16px 0}
+.w{display:flex;align-items:center;gap:10px;text-align:left;background:var(--surf2);border:1px solid transparent;border-radius:12px;padding:10px 12px;font:inherit;color:var(--ink);cursor:pointer;min-width:0}
+.w em{font:normal .75rem ui-monospace,Menlo,monospace;color:var(--mute);min-width:1.4em}
+.w span{font-weight:650;font-size:1.05rem;overflow:hidden;text-overflow:ellipsis}
+.w.sel{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.act{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{font:inherit;font-weight:650;border:1px solid var(--line);background:var(--surf2);color:var(--ink);padding:12px;border-radius:14px;cursor:pointer}
+.btn.pri{grid-column:1/-1;background:var(--acc);border-color:var(--acc);color:#fff;padding:14px}
+.btn:active,.w:active{transform:translateY(1px)}
+.btn:focus-visible,.w:focus-visible,.seg button:focus-visible,.r:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#mat{margin-top:14px;display:grid;gap:2px}
+.r{display:grid;grid-template-columns:1.6em 1fr 3em;align-items:center;gap:8px;padding:4px 8px;border-radius:9px;cursor:pointer}
+.r em{font:normal .72rem ui-monospace,Menlo,monospace;color:var(--mute)}
+.r code{font:.72rem ui-monospace,Menlo,monospace;color:var(--mute);text-align:right}
+.cells{display:grid;grid-template-columns:repeat(11,1fr);gap:3px;max-width:340px}
+.cells i{height:14px;border-radius:3px;background:var(--off)}
+.cells i.on{background:var(--ink)}
+.cells i.c{box-shadow:0 0 0 1.5px var(--mute)}
+.r.sel{background:var(--accsoft)}
+.r.sel .cells i.on{background:var(--acc)}
+#det{margin:12px 0 0;padding:10px 12px;border-radius:12px;background:var(--surf2);font-size:.88rem;color:var(--mute);overflow-wrap:anywhere}
+#det b{color:var(--ink)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;color:var(--mute);font-size:.8rem}
+.leg i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+ol{margin:8px 0 0;padding-left:20px;color:var(--mute);font-size:.9rem}
+body.hide #list span,body.hide #mat,body.hide #det{filter:blur(10px);user-select:none}
+#list span,#mat,#det{transition:filter .25s}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--acc);color:#fff;font-weight:600;padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s}
 #toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -54,36 +58,42 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 </head>
 <body>
 <main>
-<div class="eyebrow"><span></span>Recovery phrase · BIP39</div>
-<h1>Generator seed phrase BIP39</h1>
-<p class="sub">12 lub 24 słowa z losowej entropii (128 lub 256 bitów) plus suma kontrolna. Każde słowo to 11 bitów, czyli numer od 0 do 2047 na liście.</p>
-<p class="warn">Narzędzie edukacyjne. Do prawdziwego portfela generuj frazę offline, w sprzętowym portfelu lub sprawdzonym oprogramowaniu open source.</p>
-<div class="bar">
+<header>
+<div class="logo"><i></i>Seed</div>
 <div class="seg" role="group" aria-label="Liczba słów"><button id="w12" class="on" aria-pressed="true">12 słów</button><button id="w24" aria-pressed="false">24 słowa</button></div>
-<button class="primary" id="gen">Generuj nową</button>
-<button id="blur" aria-pressed="false">Zamazuj słowa</button>
-<button id="copy">Kopiuj do schowka</button>
+</header>
+<section class="card">
+<div class="ch"><h1>Fraza odzyskiwania</h1><span class="tag">BIP39</span></div>
+<p class="mut">Tylko do nauki. Prawdziwą frazę generuj offline albo w sprzętowym portfelu.</p>
+<div id="list" aria-live="polite"></div>
+<div class="act">
+<button class="btn pri" id="gen">Generuj nową</button>
+<button class="btn" id="blur" aria-pressed="false">Zamazuj słowa</button>
+<button class="btn" id="copy">Kopiuj</button>
 </div>
-<section class="panel">
-<div class="grid" id="grid" aria-live="polite"></div>
-<div class="legend"><span><b style="background:var(--ent)"></b>entropia (1)</span><span><b style="background:var(--entoff)"></b>entropia (0)</span><span><b style="background:var(--chk)"></b>suma kontrolna (1)</span><span><b style="background:var(--chkoff)"></b>suma kontrolna (0)</span></div>
 </section>
-<div class="steps"><b>Jak to działa</b>
+<section class="card">
+<h2>Skąd te słowa?</h2>
+<p class="mut">Każdy wiersz to 11 bitów, czyli numer słowa na liście 2048. Stuknij wiersz albo słowo, żeby je podświetlić.</p>
+<div id="mat"></div>
+<p id="det"></p>
+<div class="leg"><span><i style="background:var(--ink)"></i>1</span><span><i style="background:var(--off)"></i>0</span><span><i style="background:var(--off);box-shadow:0 0 0 1.5px var(--mute)"></i>suma kontrolna</span></div>
+</section>
+<section class="card">
+<h2>Jak to działa</h2>
 <ol>
-<li>Przeglądarka losuje 16 bajtów (128 bitów) dla 12 słów albo 32 bajty (256 bitów) dla 24 słów, przez crypto.getRandomValues.</li>
-<li>Liczy SHA-256 tych bajtów i bierze pierwsze 4 bity (12 słów) albo 8 bitów (24 słowa) jako sumę kontrolną.</li>
-<li>132 lub 264 bity tną się na porcje po 11 bitów; każda porcja to indeks słowa.</li>
-</ol></div>
+<li>Przeglądarka losuje 128 bitów (12 słów) albo 256 bitów (24 słowa) przez crypto.getRandomValues.</li>
+<li>Liczy SHA-256 i dokleja pierwsze 4 albo 8 bitów jako sumę kontrolną.</li>
+<li>Całość tnie się na porcje po 11 bitów, a każda to indeks słowa.</li>
+</ol>
+</section>
 </main>
 <div id="toast" role="status"></div>
 <script>
 const WORDS = "abandon,ability,able,about,above,absent,absorb,abstract,absurd,abuse,access,accident,account,accuse,achieve,acid,acoustic,acquire,across,act,action,actor,actress,actual,adapt,add,addict,address,adjust,admit,adult,advance,advice,aerobic,affair,afford,afraid,again,age,agent,agree,ahead,aim,air,airport,aisle,alarm,album,alcohol,alert,alien,all,alley,allow,almost,alone,alpha,already,also,alter,always,amateur,amazing,among,amount,amused,analyst,anchor,ancient,anger,angle,angry,animal,ankle,announce,annual,another,answer,antenna,antique,anxiety,any,apart,apology,appear,apple,approve,april,arch,arctic,area,arena,argue,arm,armed,armor,army,around,arrange,arrest,arrive,arrow,art,artefact,artist,artwork,ask,aspect,assault,asset,assist,assume,asthma,athlete,atom,attack,attend,attitude,attract,auction,audit,august,aunt,author,auto,autumn,average,avocado,avoid,awake,aware,away,awesome,awful,awkward,axis,baby,bachelor,bacon,badge,bag,balance,balcony,ball,bamboo,banana,banner,bar,barely,bargain,barrel,base,basic,basket,battle,beach,bean,beauty,because,become,beef,before,begin,behave,behind,believe,below,belt,bench,benefit,best,betray,better,between,beyond,bicycle,bid,bike,bind,biology,bird,birth,bitter,black,blade,blame,blanket,blast,bleak,bless,blind,blood,blossom,blouse,blue,blur,blush,board,boat,body,boil,bomb,bone,bonus,book,boost,border,boring,borrow,boss,bottom,bounce,box,boy,bracket,brain,brand,brass,brave,bread,breeze,brick,bridge,brief,bright,bring,brisk,broccoli,broken,bronze,broom,brother,brown,brush,bubble,buddy,budget,buffalo,build,bulb,bulk,bullet,bundle,bunker,burden,burger,burst,bus,business,busy,butter,buyer,buzz,cabbage,cabin,cable,cactus,cage,cake,call,calm,camera,camp,can,canal,cancel,candy,cannon,canoe,canvas,canyon,capable,capital,captain,car,carbon,card,cargo,carpet,carry,cart,case,cash,casino,castle,casual,cat,catalog,catch,category,cattle,caught,cause,caution,cave,ceiling,celery,cement,census,century,cereal,certain,chair,chalk,champion,change,chaos,chapter,charge,chase,chat,cheap,check,cheese,chef,cherry,chest,chicken,chief,child,chimney,choice,choose,chronic,chuckle,chunk,churn,cigar,cinnamon,circle,citizen,city,civil,claim,clap,clarify,claw,clay,clean,clerk,clever,click,client,cliff,climb,clinic,clip,clock,clog,close,cloth,cloud,clown,club,clump,cluster,clutch,coach,coast,coconut,code,coffee,coil,coin,collect,color,column,combine,come,comfort,comic,common,company,concert,conduct,confirm,congress,connect,consider,control,convince,cook,cool,copper,copy,coral,core,corn,correct,cost,cotton,couch,country,couple,course,cousin,cover,coyote,crack,cradle,craft,cram,crane,crash,crater,crawl,crazy,cream,credit,creek,crew,cricket,crime,crisp,critic,crop,cross,crouch,crowd,crucial,cruel,cruise,crumble,crunch,crush,cry,crystal,cube,culture,cup,cupboard,curious,current,curtain,curve,cushion,custom,cute,cycle,dad,damage,damp,dance,danger,daring,dash,daughter,dawn,day,deal,debate,debris,decade,december,decide,decline,decorate,decrease,deer,defense,define,defy,degree,delay,deliver,demand,demise,denial,dentist,deny,depart,depend,deposit,depth,deputy,derive,describe,desert,design,desk,despair,destroy,detail,detect,develop,device,devote,diagram,dial,diamond,diary,dice,diesel,diet,differ,digital,dignity,dilemma,dinner,dinosaur,direct,dirt,disagree,discover,disease,dish,dismiss,disorder,display,distance,divert,divide,divorce,dizzy,doctor,document,dog,doll,dolphin,domain,donate,donkey,donor,door,dose,double,dove,draft,dragon,drama,drastic,draw,dream,dress,drift,drill,drink,drip,drive,drop,drum,dry,duck,dumb,dune,during,dust,dutch,duty,dwarf,dynamic,eager,eagle,early,earn,earth,easily,east,easy,echo,ecology,economy,edge,edit,educate,effort,egg,eight,either,elbow,elder,electric,elegant,element,elephant,elevator,elite,else,embark,embody,embrace,emerge,emotion,employ,empower,empty,enable,enact,end,endless,endorse,enemy,energy,enforce,engage,engine,enhance,enjoy,enlist,enough,enrich,enroll,ensure,enter,entire,entry,envelope,episode,equal,equip,era,erase,erode,erosion,error,erupt,escape,essay,essence,estate,eternal,ethics,evidence,evil,evoke,evolve,exact,example,excess,exchange,excite,exclude,excuse,execute,exercise,exhaust,exhibit,exile,exist,exit,exotic,expand,expect,expire,explain,expose,express,extend,extra,eye,eyebrow,fabric,face,faculty,fade,faint,faith,fall,false,fame,family,famous,fan,fancy,fantasy,farm,fashion,fat,fatal,father,fatigue,fault,favorite,feature,february,federal,fee,feed,feel,female,fence,festival,fetch,fever,few,fiber,fiction,field,figure,file,film,filter,final,find,fine,finger,finish,fire,firm,first,fiscal,fish,fit,fitness,fix,flag,flame,flash,flat,flavor,flee,flight,flip,float,flock,floor,flower,fluid,flush,fly,foam,focus,fog,foil,fold,follow,food,foot,force,forest,forget,fork,fortune,forum,forward,fossil,foster,found,fox,fragile,frame,frequent,fresh,friend,fringe,frog,front,frost,frown,frozen,fruit,fuel,fun,funny,furnace,fury,future,gadget,gain,galaxy,gallery,game,gap,garage,garbage,garden,garlic,garment,gas,gasp,gate,gather,gauge,gaze,general,genius,genre,gentle,genuine,gesture,ghost,giant,gift,giggle,ginger,giraffe,girl,give,glad,glance,glare,glass,glide,glimpse,globe,gloom,glory,glove,glow,glue,goat,goddess,gold,good,goose,gorilla,gospel,gossip,govern,gown,grab,grace,grain,grant,grape,grass,gravity,great,green,grid,grief,grit,grocery,group,grow,grunt,guard,guess,guide,guilt,guitar,gun,gym,habit,hair,half,hammer,hamster,hand,happy,harbor,hard,harsh,harvest,hat,have,hawk,hazard,head,health,heart,heavy,hedgehog,height,hello,helmet,help,hen,hero,hidden,high,hill,hint,hip,hire,history,hobby,hockey,hold,hole,holiday,hollow,home,honey,hood,hope,horn,horror,horse,hospital,host,hotel,hour,hover,hub,huge,human,humble,humor,hundred,hungry,hunt,hurdle,hurry,hurt,husband,hybrid,ice,icon,idea,identify,idle,ignore,ill,illegal,illness,image,imitate,immense,immune,impact,impose,improve,impulse,inch,include,income,increase,index,indicate,indoor,industry,infant,inflict,inform,inhale,inherit,initial,inject,injury,inmate,inner,innocent,input,inquiry,insane,insect,inside,inspire,install,intact,interest,into,invest,invite,involve,iron,island,isolate,issue,item,ivory,jacket,jaguar,jar,jazz,jealous,jeans,jelly,jewel,job,join,joke,journey,joy,judge,juice,jump,jungle,junior,junk,just,kangaroo,keen,keep,ketchup,key,kick,kid,kidney,kind,kingdom,kiss,kit,kitchen,kite,kitten,kiwi,knee,knife,knock,know,lab,label,labor,ladder,lady,lake,lamp,language,laptop,large,later,latin,laugh,laundry,lava,law,lawn,lawsuit,layer,lazy,leader,leaf,learn,leave,lecture,left,leg,legal,legend,leisure,lemon,lend,length,lens,leopard,lesson,letter,level,liar,liberty,library,license,life,lift,light,like,limb,limit,link,lion,liquid,list,little,live,lizard,load,loan,lobster,local,lock,logic,lonely,long,loop,lottery,loud,lounge,love,loyal,lucky,luggage,lumber,lunar,lunch,luxury,lyrics,machine,mad,magic,magnet,maid,mail,main,major,make,mammal,man,manage,mandate,mango,mansion,manual,maple,marble,march,margin,marine,market,marriage,mask,mass,master,match,material,math,matrix,matter,maximum,maze,meadow,mean,measure,meat,mechanic,medal,media,melody,melt,member,memory,mention,menu,mercy,merge,merit,merry,mesh,message,metal,method,middle,midnight,milk,million,mimic,mind,minimum,minor,minute,miracle,mirror,misery,miss,mistake,mix,mixed,mixture,mobile,model,modify,mom,moment,monitor,monkey,monster,month,moon,moral,more,morning,mosquito,mother,motion,motor,mountain,mouse,move,movie,much,muffin,mule,multiply,muscle,museum,mushroom,music,must,mutual,myself,mystery,myth,naive,name,napkin,narrow,nasty,nation,nature,near,neck,need,negative,neglect,neither,nephew,nerve,nest,net,network,neutral,never,news,next,nice,night,noble,noise,nominee,noodle,normal,north,nose,notable,note,nothing,notice,novel,now,nuclear,number,nurse,nut,oak,obey,object,oblige,obscure,observe,obtain,obvious,occur,ocean,october,odor,off,offer,office,often,oil,okay,old,olive,olympic,omit,once,one,onion,online,only,open,opera,opinion,oppose,option,orange,orbit,orchard,order,ordinary,organ,orient,original,orphan,ostrich,other,outdoor,outer,output,outside,oval,oven,over,own,owner,oxygen,oyster,ozone,pact,paddle,page,pair,palace,palm,panda,panel,panic,panther,paper,parade,parent,park,parrot,party,pass,patch,path,patient,patrol,pattern,pause,pave,payment,peace,peanut,pear,peasant,pelican,pen,penalty,pencil,people,pepper,perfect,permit,person,pet,phone,photo,phrase,physical,piano,picnic,picture,piece,pig,pigeon,pill,pilot,pink,pioneer,pipe,pistol,pitch,pizza,place,planet,plastic,plate,play,please,pledge,pluck,plug,plunge,poem,poet,point,polar,pole,police,pond,pony,pool,popular,portion,position,possible,post,potato,pottery,poverty,powder,power,practice,praise,predict,prefer,prepare,present,pretty,prevent,price,pride,primary,print,priority,prison,private,prize,problem,process,produce,profit,program,project,promote,proof,property,prosper,protect,proud,provide,public,pudding,pull,pulp,pulse,pumpkin,punch,pupil,puppy,purchase,purity,purpose,purse,push,put,puzzle,pyramid,quality,quantum,quarter,question,quick,quit,quiz,quote,rabbit,raccoon,race,rack,radar,radio,rail,rain,raise,rally,ramp,ranch,random,range,rapid,rare,rate,rather,raven,raw,razor,ready,real,reason,rebel,rebuild,recall,receive,recipe,record,recycle,reduce,reflect,reform,refuse,region,regret,regular,reject,relax,release,relief,rely,remain,remember,remind,remove,render,renew,rent,reopen,repair,repeat,replace,report,require,rescue,resemble,resist,resource,response,result,retire,retreat,return,reunion,reveal,review,reward,rhythm,rib,ribbon,rice,rich,ride,ridge,rifle,right,rigid,ring,riot,ripple,risk,ritual,rival,river,road,roast,robot,robust,rocket,romance,roof,rookie,room,rose,rotate,rough,round,route,royal,rubber,rude,rug,rule,run,runway,rural,sad,saddle,sadness,safe,sail,salad,salmon,salon,salt,salute,same,sample,sand,satisfy,satoshi,sauce,sausage,save,say,scale,scan,scare,scatter,scene,scheme,school,science,scissors,scorpion,scout,scrap,screen,script,scrub,sea,search,season,seat,second,secret,section,security,seed,seek,segment,select,sell,seminar,senior,sense,sentence,series,service,session,settle,setup,seven,shadow,shaft,shallow,share,shed,shell,sheriff,shield,shift,shine,ship,shiver,shock,shoe,shoot,shop,short,shoulder,shove,shrimp,shrug,shuffle,shy,sibling,sick,side,siege,sight,sign,silent,silk,silly,silver,similar,simple,since,sing,siren,sister,situate,six,size,skate,sketch,ski,skill,skin,skirt,skull,slab,slam,sleep,slender,slice,slide,slight,slim,slogan,slot,slow,slush,small,smart,smile,smoke,smooth,snack,snake,snap,sniff,snow,soap,soccer,social,sock,soda,soft,solar,soldier,solid,solution,solve,someone,song,soon,sorry,sort,soul,sound,soup,source,south,space,spare,spatial,spawn,speak,special,speed,spell,spend,sphere,spice,spider,spike,spin,spirit,split,spoil,sponsor,spoon,sport,spot,spray,spread,spring,spy,square,squeeze,squirrel,stable,stadium,staff,stage,stairs,stamp,stand,start,state,stay,steak,steel,stem,step,stereo,stick,still,sting,stock,stomach,stone,stool,story,stove,strategy,street,strike,strong,struggle,student,stuff,stumble,style,subject,submit,subway,success,such,sudden,suffer,sugar,suggest,suit,summer,sun,sunny,sunset,super,supply,supreme,sure,surface,surge,surprise,surround,survey,suspect,sustain,swallow,swamp,swap,swarm,swear,sweet,swift,swim,swing,switch,sword,symbol,symptom,syrup,system,table,tackle,tag,tail,talent,talk,tank,tape,target,task,taste,tattoo,taxi,teach,team,tell,ten,tenant,tennis,tent,term,test,text,thank,that,theme,then,theory,there,they,thing,this,thought,three,thrive,throw,thumb,thunder,ticket,tide,tiger,tilt,timber,time,tiny,tip,tired,tissue,title,toast,tobacco,today,toddler,toe,together,toilet,token,tomato,tomorrow,tone,tongue,tonight,tool,tooth,top,topic,topple,torch,tornado,tortoise,toss,total,tourist,toward,tower,town,toy,track,trade,traffic,tragic,train,transfer,trap,trash,travel,tray,treat,tree,trend,trial,tribe,trick,trigger,trim,trip,trophy,trouble,truck,true,truly,trumpet,trust,truth,try,tube,tuition,tumble,tuna,tunnel,turkey,turn,turtle,twelve,twenty,twice,twin,twist,two,type,typical,ugly,umbrella,unable,unaware,uncle,uncover,under,undo,unfair,unfold,unhappy,uniform,unique,unit,universe,unknown,unlock,until,unusual,unveil,update,upgrade,uphold,upon,upper,upset,urban,urge,usage,use,used,useful,useless,usual,utility,vacant,vacuum,vague,valid,valley,valve,van,vanish,vapor,various,vast,vault,vehicle,velvet,vendor,venture,venue,verb,verify,version,very,vessel,veteran,viable,vibrant,vicious,victory,video,view,village,vintage,violin,virtual,virus,visa,visit,visual,vital,vivid,vocal,voice,void,volcano,volume,vote,voyage,wage,wagon,wait,walk,wall,walnut,want,warfare,warm,warrior,wash,wasp,waste,water,wave,way,wealth,weapon,wear,weasel,weather,web,wedding,weekend,weird,welcome,west,wet,whale,what,wheat,wheel,when,where,whip,whisper,wide,width,wife,wild,will,win,window,wine,wing,wink,winner,winter,wire,wisdom,wise,wish,witness,wolf,woman,wonder,wood,wool,word,work,world,worry,worth,wrap,wreck,wrestle,wrist,write,wrong,yard,year,yellow,you,young,youth,zebra,zero,zone,zoo".split(",");
-const grid = document.getElementById("grid");
-const toast = document.getElementById("toast");
-let phrase = [];
-let busy = false;
+const $ = id => document.getElementById(id);
+let count = 12, sel = 0, phrase = [], busy = false;
 
-let count = 12;
 async function makePhrase(){
   const ent = new Uint8Array(count*4/3);
   crypto.getRandomValues(ent);
@@ -92,74 +102,52 @@ async function makePhrase(){
   const bits = Array.from(ent).map(bin).join("") + bin(hash[0]).slice(0,count/3);
   const out = [];
   for(let i=0;i<count;i++){
-    const chunk = bits.slice(i*11,(i+1)*11);
-    out.push({chunk, idx:parseInt(chunk,2), word:WORDS[parseInt(chunk,2)], chk: i===count-1});
+    const chunk = bits.slice(i*11,(i+1)*11), idx = parseInt(chunk,2);
+    out.push({chunk, idx, word:WORDS[idx], chk:i===count-1});
   }
   return out;
 }
 
-function build(){
-  grid.innerHTML = "";
-  for(let i=0;i<count;i++){
-    const c = document.createElement("div");
-    c.className = "card";
-    c.innerHTML = '<div class="top"><span class="n">'+(i+1)+'.</span><span class="word"></span></div><div class="bits"></div><div class="idx"></div>';
-    grid.appendChild(c);
-  }
-}
-
-function paint(i, item){
-  const c = grid.children[i];
-  c.querySelector(".word").textContent = item.word;
-  c.querySelector(".idx").textContent = item.chunk + " = " + item.idx;
-  const b = c.querySelector(".bits");
-  b.innerHTML = "";
-  for(let k=0;k<11;k++){
-    const s = document.createElement("i");
-    if(item.chunk[k]==="1") s.className = "on";
-    if(item.chk && k>=11-count/3) s.className = "c" + (item.chunk[k]==="1" ? " on" : "");
-    b.appendChild(s);
-  }
+function render(p){
+  $("list").style.gridTemplateRows = "repeat(" + count/2 + ",auto)";
+  $("list").innerHTML = p.map((x,i)=>'<button class="w'+(i===sel?' sel':'')+'" data-i="'+i+'"><em>'+String(i+1).padStart(2,"0")+'</em><span>'+x.word+'</span></button>').join("");
+  $("mat").innerHTML = p.map((x,i)=>'<div class="r'+(i===sel?' sel':'')+'" data-i="'+i+'" tabindex="0"><em>'+(i+1)+'</em><div class="cells">'+[...x.chunk].map((b,k)=>'<i class="'+(b==="1"?"on":"")+(x.chk&&k>=11-count/3?" c":"")+'"></i>').join("")+'</div><code>'+x.idx+'</code></div>').join("");
+  const s = p[sel];
+  $("det").innerHTML = "Słowo "+(sel+1)+": <b>"+s.chunk+"</b> = "+s.idx+" → <b>"+s.word+"</b>"+(s.chk?" · ostatnie "+(count===12?"4 bity":"8 bitów")+" to suma kontrolna":"");
 }
 
 async function generate(){
   if(busy) return;
   busy = true;
   phrase = await makePhrase();
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(!reduce){
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
     for(let t=0;t<8;t++){
-      for(let i=0;i<count;i++){
+      render(Array.from({length:count},(_,i)=>{
         const idx = Math.floor(Math.random()*2048);
-        const chunk = idx.toString(2).padStart(11,"0");
-        paint(i,{chunk,idx,word:WORDS[idx],chk:i===count-1});
-      }
+        return {chunk:idx.toString(2).padStart(11,"0"), idx, word:WORDS[idx], chk:i===count-1};
+      }));
       await new Promise(r=>setTimeout(r,60));
     }
   }
-  phrase.forEach((p,i)=>paint(i,p));
+  render(phrase);
   busy = false;
 }
 
 function note(msg){
-  toast.textContent = msg;
-  toast.classList.add("show");
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
   clearTimeout(note.t);
-  note.t = setTimeout(()=>toast.classList.remove("show"),1800);
+  note.t = setTimeout(()=>t.classList.remove("show"),1800);
 }
 
 async function copyText(text){
-  try{
-    await navigator.clipboard.writeText(text);
-    return true;
-  }catch(e){
+  try{ await navigator.clipboard.writeText(text); return true; }
+  catch(e){
     try{
       const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
       const ok = document.execCommand("copy");
       ta.remove();
       return ok;
@@ -167,33 +155,39 @@ async function copyText(text){
   }
 }
 
-document.getElementById("gen").onclick = generate;
-document.getElementById("blur").onclick = e => {
-  const on = grid.classList.toggle("blur");
+function pick(e){
+  const el = e.target.closest("[data-i]");
+  if(!el || busy || !phrase.length) return;
+  sel = +el.dataset.i;
+  render(phrase);
+}
+$("list").onclick = pick;
+$("mat").onclick = pick;
+$("mat").onkeydown = e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(e); } };
+
+$("gen").onclick = generate;
+$("blur").onclick = e => {
+  const on = document.body.classList.toggle("hide");
   e.currentTarget.textContent = on ? "Pokaż słowa" : "Zamazuj słowa";
   e.currentTarget.setAttribute("aria-pressed", on);
 };
-document.getElementById("copy").onclick = async () => {
+$("copy").onclick = async () => {
   if(!phrase.length) return;
   const ok = await copyText(phrase.map(p=>p.word).join(" "));
-  note(ok ? "Skopiowano 12 słów" : "Nie udało się skopiować");
+  note(ok ? "Skopiowano "+count+" słów" : "Nie udało się skopiować");
 };
 
 function setCount(n){
   if(busy||n===count) return;
-  count = n;
+  count = n; sel = 0;
   [["w12",12],["w24",24]].forEach(([id,v])=>{
-    const b = document.getElementById(id);
-    b.classList.toggle("on",v===n);
-    b.setAttribute("aria-pressed",v===n);
+    $(id).classList.toggle("on",v===n);
+    $(id).setAttribute("aria-pressed",v===n);
   });
-  build();
   generate();
 }
-document.getElementById("w12").onclick = ()=>setCount(12);
-document.getElementById("w24").onclick = ()=>setCount(24);
-
-build();
+$("w12").onclick = ()=>setCount(12);
+$("w24").onclick = ()=>setCount(24);
 generate();
 </script>
 </body>
